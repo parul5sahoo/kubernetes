@@ -60,7 +60,7 @@ network_closure.sh
 # Also ignore etcd installed by hack/install-etcd.sh
 /third_party/etcd*
 /default.etcd
-
+/staging/src/k8s.io/code-generator
 # User cluster configs
 .kubeconfig
 

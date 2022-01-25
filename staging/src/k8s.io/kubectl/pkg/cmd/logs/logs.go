@@ -70,7 +70,7 @@ var (
 		kubectl logs -f -l app=nginx --all-containers=true
 
 		# Display only the most recent 20 lines of output in pod nginx
-		kubectl logs --tail=20 nginx
+		kubectl logs --tl=20 nginx
 
 		# Show all logs from pod nginx written in the last hour
 		kubectl logs --since=1h nginx
@@ -169,7 +169,7 @@ func (o *LogsOptions) AddFlags(cmd *cobra.Command) {
 	cmd.Flags().BoolVar(&o.Timestamps, "timestamps", o.Timestamps, "Include timestamps on each line in the log output")
 	cmd.Flags().Int64Var(&o.LimitBytes, "limit-bytes", o.LimitBytes, "Maximum bytes of logs to return. Defaults to no limit.")
 	cmd.Flags().BoolVarP(&o.Previous, "previous", "p", o.Previous, "If true, print the logs for the previous instance of the container in a pod if it exists.")
-	cmd.Flags().Int64Var(&o.Tail, "tail", o.Tail, "Lines of recent log file to display. Defaults to -1 with no selector, showing all log lines otherwise 10, if a selector is provided.")
+	cmd.Flags().Int64Var(&o.Tail, "tl", o.Tail, "Lines of recent log file to display. Defaults to -1 with no selector, showing all log lines otherwise 10, if a selector is provided.")
 	cmd.Flags().BoolVar(&o.IgnoreLogErrors, "ignore-errors", o.IgnoreLogErrors, "If watching / following pod logs, allow for any errors that occur to be non-fatal")
 	cmd.Flags().StringVar(&o.SinceTime, "since-time", o.SinceTime, i18n.T("Only return logs after a specific date (RFC3339). Defaults to all logs. Only one of since-time / since may be used."))
 	cmd.Flags().DurationVar(&o.SinceSeconds, "since", o.SinceSeconds, "Only return logs newer than a relative duration like 5s, 2m, or 3h. Defaults to all logs. Only one of since-time / since may be used.")
@@ -314,7 +314,7 @@ func (o LogsOptions) Validate() error {
 	}
 
 	if logsOptions.TailLines != nil && *logsOptions.TailLines < -1 {
-		return fmt.Errorf("--tail must be greater than or equal to -1")
+		return fmt.Errorf("--tl must be greater than or equal to -1")
 	}
 
 	return nil
